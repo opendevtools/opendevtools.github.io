@@ -4,7 +4,7 @@
 Use this tool to get up and running fast with configs and more in your project.
 The tool currently supports creating React apps (using [`create-react-app`](https://facebook.github.io/create-react-app)) and [ReasonReact](https://reasonml.github.io/reason-react/) apps. It can also create some basic configs in your project.
 
-This tool was previously located [@iteam1337](https://github.com/iteam1337).
+This project was initially developed [@iteam1337](https://github.com/Iteam1337).
 
 # Installation
 
