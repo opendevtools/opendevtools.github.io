@@ -1,187 +1,186 @@
 # Commands
 
-## init
-
-- Create a base setup for [`@iteam/config`](https://github.com/Iteam1337/config).
-- Initialize an empty repository and creates a `.gitignore` with some standard
-  values.
-- Install [`husky`](https://github.com/typicode/husky), a tool for git hooks, and setup
-  it up with [`pretty-quick`](https://github.com/azz/pretty-quick) that runs
-  `prettier` on staged files.
-- Create `jest.config.js` and install [`jest`](https://jestjs.io/)
-- Create a `.nvmrc` wih the users current node version
-- Install [`prettier`](https://prettier.io/), a tool that formats JavaScript, and
-  creates our preferred configuration.
-- Install `eslint` and create config for Node or React
-
-#### Example
-
-```sh
-$ supreme init
-```
-
 ## add
 
-Add one of the configs/packages created by [`init`](init) inside the current
-working directory.
+### Git
 
-### Valid commands
+Add a .gitignore with some common defaults.
 
-#### config
+```
+supreme add git
+```
 
-Create a base setup for [`@iteam/config`](https://github.com/Iteam1337/config)
-with TypeScript.
-
-##### Flags
-
-- `--javascript` (optional) - create a config with JavaScript
-
-#### eslint
-
-Install `eslint` and create a config based on which flag is set. If no flag is
-passed, only install `eslint`.
-
-##### Flags
-
-- `--node` (optional) - create a config with [`@iteam/eslint-config-node`](https://github.com/Iteam1337/eslint-config-node)
-- `--react` (optional) - create a config with [`@iteam/eslint-config-react`](https://github.com/Iteam1337/eslint-config-react/)
-
-#### gitignore / git
-
-Initialize an empty repository and creates a `.gitignore` with some standard
-values.
-
-#### husky
+### Husky
 
 Install [`husky`](https://github.com/typicode/husky), a tool for git hooks, and setup
 it up with [`pretty-quick`](https://github.com/azz/pretty-quick) that runs
 `prettier` on staged files.
 
-#### jest
-
-Create `jest.config.js` and install [`jest`](https://jestjs.io/)
-
-#### nvm / nvmrc
-
-Create a `.nvmrc` wih the users current node version
-
-#### prettier
-
-Install [`prettier`](https://prettier.io/), a tool that formats JavaScript, and
-creates our preferred configuration.
-
-#### Example
-
-```sh
-$ supreme add git
+```
+supreme add husky
 ```
 
-## react
+### Jest
 
-Create a TypeScript React app using `create-react-app` with the provided name.
+Install dependencies and configuration for Jest testing. It also adds scripts in package.json for running tests locally and in CI environments.
 
-#### Example
+Installed npm dependencies: `jest`, `jest-watch-typeahead`, `is-ci-cli`
 
-```sh
-$ supreme react my-awesome-app
+```
+supreme add jest
 ```
 
-#### Flags
+### NVM
 
-- `--javascript` (optional) - create a JavaScript React app
+Add a .nvmrc with the current running Node version
 
-## reason
-
-Create a ReasonReact app using `bsb`, from `bs-platform`, and customize the app with our preferred defaults.
-
-!> To use this command you will need BuckleScript and Reason, `npm i -g bs-platform`
-
-#### Included
-
-- ReasonReact
-- Test using [`jest`](https://jestjs.io/) and
-  [`react-testing-library`](https://testing-library.com/docs/react-testing-library/intro)
-- [Tailwind](https://travis-ci.com/) styling
-- Automatic versioning using `semantic-release`
-- [Now](https://zeit.co/) build (opt-in)
-
-#### Example
-
-```sh
-$ supreme reason my-awesome-app
+```
+supreme add nvm
 ```
 
-## snippets
+### Prettier
 
-Copy a bunch of commonly used snippets to the clipboard
+Install `prettier` and add a `.prettierrc` with some defaults.
 
-| IDE         | Language   | Snippet engine                                   | IDE flag | Language flag    |
-| ----------- | ---------- | ------------------------------------------------ | -------- | ---------------- |
-| vim, neovim | JavaScript | [UltiSnips](https://github.com/SirVer/ultisnips) | vim      | js, javascript   |
-| vim, neovim | TypeScript | [UltiSnips](https://github.com/SirVer/ultisnips) | vim      | ts, typescript   |
-| vim, neovim | ReasonML   | [UltiSnips](https://github.com/SirVer/ultisnips) | vim      | reason, reasonml |
-| VSCode      | ReasonML   | -                                                | vscode   | reason, reasonml |
+Installed npm dependencies: `prettier`
 
-#### Flags
-
-- `--ide` (required) - What IDE to copy snippets for
-- `--language` (required) - What language to copy snippets for
-
-#### Example
-
-```sh
-$ supreme snippets --ide=vim --language=ts
+```
+supreme add prettier
 ```
 
-## graphql
+### Tailwind CSS
 
-Create a simple GraphQL API with TypeScript. Includes some setup from `init`,
-like `prettier`, `husky`, `nvmrc`, `gitignore` and `.eslint`.
+Install dependencies and configuration for Tailwind CSS
 
-#### Flags
+Installed npm dependencies: `tailwindcss`, `postcss`, `autoprefixer`
 
-- `--examples` - Generate examples for query, mutation and subscription. Example queries are provided in the GraphQL Playground when API is started.
-- `--auth` - Adds schema directives for JWT-based authentication/authorization and role based strategy patterns.
-
-#### Example
-
-```sh
-$ supreme graphql my-great-graphql-api
+```
+supreme add tailwind
 ```
 
-## ghactions
+## Config
 
-Create GitHub actions configuration files.
+### List
 
-- `pr_check.yml` - Runs tests and linting on pull requests targeting `master`
-- `release.yml` - Runs tests and publishes a new release on push to `master`
+Display the current configuration
 
-#### Flags
+```
+supreme config list
+```
 
-- `--no-npm` - Generates a `.releaserc` with `@semantic-release/npm` turned off and
-  removes `NPM_TOKEN` secret from `release.yml`
+### Set
 
-#### Environment variables
+Update a configuration setting
 
-Environment variables are set inside `github repository settings -> secrets`.
+- `--node` - Set if you want to use `npm` or `yarn` for installing Node
+  dependencies [Possible values: `npm`, `yarn`]
 
-- `NPM_TOKEN` (optional) - If you wish to publish the package/app to `npm`. If you don't
-  want to build to `npm` then read below.
+```
+supreme config set --node yarn
+```
+
+### Install
+
+Install any Node package. Automatically selects `npm` or `yarn` depending on
+which lockfile exists (or falls back to what's set in the config). If no arguments are passed it runs `npm install` or `yarn install`.
+
+```
+// Install all dependencies
+supreme install
+
+// Install one package
+supreme install jest
+
+// Install multiple
+supreme install "jest prettier"
+
+// Install with bash expansion
+supreme install "jest prettier @types/{jest,react}"
+```
+
+## GitHub Actions
+
+Create workflows for GitHub actions. It automatically detects these languages
+and tweaks the config files:
+
+- JavaScript / TypeScript
+- ReScript
+- Rust
+
+### Files created
+
+- `pr_check.yml` - Run tests and linting on pull requests targeting master branch
+- `release.yml` - Run tests and publishes a new release on push to master branch
+
+### Flags
+
+- `--no-npm`, `-n` - Turn off `@semantic-release/npm` in `.releaserc` and remove `NPM_TOKEN` secret from `release.yml`
+- `--project`, `-p` - Pass a supported project type [Possible values: `javascript`, `rescript`, `rust`]
+
+### Environment variables
+
+Environment variables are set inside GitHub repository settings -> Secrets.
+
 - `GITHUB_TOKEN` - Added automatically by GitHub for each repo
+- `NPM_TOKEN` (optional) - If you wish to publish the package/app to npm. If you don't want to build to npm then use the `--no-npm` flag.
 
-#### Example
-
-```sh
-$ supreme ghactions
+```
+supreme github-actions
 ```
 
-## typescript
+## ReScript
 
-Create a super basic TypeScript app. Includes some setup from `init`,
-like `prettier`, `husky`, `nvmrc`, `gitignore` and `.eslint`.
+Create a [ReScript](http://rescript-lang.org/) project with
+[Tailwind](https://tailwindcss.com/).
 
-#### Example
+```
+supreme rescript my-project-name
+```
 
-```sh
-$ supreme typescript my-basic-typescript-app
+You'll get some instructions after the project has been created
+
+- `cd my-project-name`
+- `npm install`
+- `npm start` (start the compiler)
+- `npm run server` (in another terminal window, start development server)
+
+## GraphQL
+
+Create a [GraphQL](https://graphql.org/) project.
+
+```
+supreme graphql my-project-name
+```
+
+You'll get some instructions after the project has been created
+
+- `cd my-project-name`
+- `npm install`
+- `npm run dev` (start the development server)
+
+### Run
+
+List all available `package.json` `scripts`, select
+one and `supreme` will run it.
+
+```
+supreme run
+```
+
+### Uninstall
+
+Uninstall any Node package. Automatically selects `npm` or `yarn` depending on
+which lockfile exists (or falls back to what's set in the config).
+
+```
+supreme uninstall
+```
+
+### Update dependencies
+
+Update Node packages. Automatically selects `npm` or `yarn` depending on
+which lockfile exists (or falls back to what's set in the config).
+
+```
+supreme update-dependencies
 ```
